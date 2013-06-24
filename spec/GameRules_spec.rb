@@ -66,7 +66,34 @@ describe GameRules do
 						"4", "O", "X",
 						"O", "8", "X"
 					  ]
-		test.win_requirement_total(board).should == true
+		test.game_win(board).should == true
+	end
+
+	it "checks tie" do
+		board.spots = [
+						"O", "X", "O",
+						"X", "O", "X",
+						"X", "O", "X"
+					  ]
+		test.game_tie(board).should == true
+	end
+
+	it "checks game over when game is tie" do
+		board.spots = [
+						"O", "X", "O",
+						"X", "O", "X",
+						"X", "O", "X"
+					  ]
+		test.game_over(board).should == true
+	end
+
+	it "checks game over when game is tie" do
+		board.spots = [
+						"O", "X", "O",
+						"X", "O", "X",
+						"X", "O", "X"
+					  ]
+		test.game_over(board).should == true
 	end
 
 end
