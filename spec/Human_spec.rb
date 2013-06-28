@@ -1,5 +1,5 @@
-require "Human"
-require "GameBoard"
+require "human"
+require "game_board"
 
 describe Human do
 	

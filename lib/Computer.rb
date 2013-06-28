@@ -1,4 +1,4 @@
-require_relative "GameRules"
+require_relative "game_rules"
 
 class Computer
 

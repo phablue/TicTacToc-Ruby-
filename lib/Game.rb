@@ -1,7 +1,7 @@
-require_relative "GameBoard"
-require_relative "GameRules"
-require_relative "Human"
-require_relative "Computer"
+require_relative "game_board"
+require_relative "game_rules"
+require_relative "human"
+require_relative "computer"
 class Game
 
 	def initialize
@@ -19,8 +19,8 @@ class Game
 	end
 
 	def win_msg(player)
-		return "\nCongratulations~ You win !!" if player == @player1 && @rules.game_win(@board)
-		return "\nSorry.. Computer win.." if player == @player2 && @rules.game_win(@board)
+		puts "\nCongratulations~ You win !!" if player == @player1 && @rules.game_win(@board)
+		puts "\nSorry.. Computer win.." if player == @player2 && @rules.game_win(@board)
 	end
 
 	def tie_msg
@@ -37,11 +37,11 @@ class Game
 		while @game_continue == true
 			@human.choose_spot(@board, @player1)
 			@board.show_board
-			puts win_msg(@player1)
+			win_msg(@player1)
 			break if @rules.game_over(@board)
 			@computer.choose_spot(@board, @player2)
 			@board.show_board
-			puts win_msg(@player2)
+			win_msg(@player2)
 			break if @rules.game_over(@board)
 		end
 		puts tie_msg
