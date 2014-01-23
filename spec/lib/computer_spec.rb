@@ -1,5 +1,4 @@
-require "computer"
-require "game_board"
+require "spec_helper"
 
 describe Computer do 	
 	let(:computer) {Computer.new}

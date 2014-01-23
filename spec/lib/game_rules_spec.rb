@@ -1,5 +1,4 @@
-require "game_rules"
-require "game_board"
+require "spec_helper"
 
 describe GameRules do 
 	

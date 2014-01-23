@@ -1,4 +1,4 @@
-require "game_board"
+require "spec_helper"
 
 describe "GameBoard" do
 	let(:board) {GameBoard.new}
