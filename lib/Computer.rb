@@ -1,7 +1,6 @@
 require_relative "game_rules"
 
 class Computer
-
 	def initialize
 		@rules = GameRules.new
 	end

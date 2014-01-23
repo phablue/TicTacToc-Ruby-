@@ -15,7 +15,7 @@ class Game
 	end
 
 	def welcome_msg
-		"\nWelcome to TicTacToe !"
+		puts "\nWelcome to TicTacToe !"
 	end
 
 	def win_msg(player)
@@ -24,15 +24,15 @@ class Game
 	end
 
 	def tie_msg
-		return "Game is tie" if @rules.game_tie(@board)
+		puts "Game is tie" if @rules.game_tie(@board)
 	end
 
 	def gameover_msg
-		"Game Over"
+		puts "Game Over"
 	end
 
 	def play 
-		puts welcome_msg
+		welcome_msg
 		@board.show_board
 		while @game_continue == true
 			@human.choose_spot(@board, @player1)
@@ -44,8 +44,8 @@ class Game
 			win_msg(@player2)
 			break if @rules.game_over(@board)
 		end
-		puts tie_msg
-		puts gameover_msg
+		tie_msg
+		gameover_msg
 	end
 end	
 

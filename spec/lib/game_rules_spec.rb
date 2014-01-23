@@ -3,7 +3,7 @@ require "game_board"
 
 describe GameRules do 
 	
-	let(:test) {GameRules.new}
+	let(:rules) {GameRules.new}
 	let(:board) {GameBoard.new}
 	
 	it "checks row win"  do
@@ -12,7 +12,7 @@ describe GameRules do
 						"4", "5", "6",
 						"X", "X", "X"
 				 	  ]
-		test.win_requirement_row(board).should == true
+		rules.win_requirement_row(board).should == true
 	end
 
 	it "checks row win"  do
@@ -21,7 +21,7 @@ describe GameRules do
 						"O", "O", "O",
 						"7", "8", "9"
 				 	  ]
-		test.win_requirement_row(board).should == true
+		rules.win_requirement_row(board).should == true
 	end
 
 	it "checks column win" do
@@ -30,7 +30,7 @@ describe GameRules do
 						"X", "5", "6",
 						"X", "8", "9"
 				 	  ]
-		test.win_requirement_column(board).should == true
+		rules.win_requirement_column(board).should == true
 	end
 
 	it "checks column win" do
@@ -39,7 +39,7 @@ describe GameRules do
 						"4", "5", "O",
 						"7", "8", "O"
 				 	  ]
-		test.win_requirement_column(board).should == true
+		rules.win_requirement_column(board).should == true
 	end
 
 	it "checks diagonal win" do
@@ -48,7 +48,7 @@ describe GameRules do
 						"4", "X", "6",
 						"X", "8", "9"
 				 	  ]
-		test.win_requirement_diagonal(board).should == true
+		rules.win_requirement_diagonal(board).should == true
 	end
 
 	it "checks diagonal win" do
@@ -57,7 +57,7 @@ describe GameRules do
 						"4", "O", "6",
 						"7", "8", "O"
 				 	  ]
-		test.win_requirement_diagonal(board).should == true
+		rules.win_requirement_diagonal(board).should == true
 	end
 
 	it "checks win" do
@@ -66,7 +66,7 @@ describe GameRules do
 						"4", "O", "X",
 						"O", "8", "X"
 					  ]
-		test.game_win(board).should == true
+		rules.game_win(board).should == true
 	end
 
 	it "checks tie" do
@@ -75,7 +75,7 @@ describe GameRules do
 						"X", "O", "X",
 						"X", "O", "X"
 					  ]
-		test.game_tie(board).should == true
+		rules.game_tie(board).should == true
 	end
 
 	it "checks game over when game is tie" do
@@ -84,7 +84,7 @@ describe GameRules do
 						"O", "X", "O",
 						"O", "X", "X"
 					  ]
-		test.game_over(board).should == true
+		rules.game_over(board).should == true
 	end
 
 	it "checks game over when game is win" do
@@ -93,7 +93,7 @@ describe GameRules do
 						"4", "O", "X",
 						"7", "O", "9"
 					  ]
-		test.game_over(board).should == true
+		rules.game_over(board).should == true
 	end
 
 end
