@@ -6,7 +6,7 @@ class Computer
 	end
 
 	def choose_spot(board, current_player)
-		puts "Please wait to computer play.."
+		print "\nPlease wait to computer play..\n\n"
 		choice = minimax(board, current_player)[1]
 		board.mark_choice_spot(choice, current_player)
 	end

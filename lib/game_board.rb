@@ -32,7 +32,7 @@ class GameBoard
 	def show_board
 		for index in 0..2
 			puts row_spots[index].join("  |  ")
-			puts "ㅡㅡㅡㅡㅡㅡㅡ"
+			puts "--------------" unless index == 2
 		end
 	end
 
