@@ -9,7 +9,7 @@ describe Human do
 			human.should_receive(:puts).with("Enter a number of your choice : ")
 			human.choose_msg
 		end
-		
+
 		it "when raise error" do
 			human.should_receive(:puts).with("That is not an available number. Please choose a different number.")
 			human.err_msg
@@ -17,7 +17,7 @@ describe Human do
 	end
 
 	context "User choose a spot" do
-		before(:each) { 
+		before(:each) {
 			board.spots  = [
 											 "1", "X", "3",
 											 "4", "X", "6",

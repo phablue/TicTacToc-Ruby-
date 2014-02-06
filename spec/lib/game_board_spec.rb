@@ -48,5 +48,5 @@ describe "GameBoard" do
 		board.mark_choice_spot("2", "X")
 		board.spots[1].should == "X"
 	end
-	
+
 end

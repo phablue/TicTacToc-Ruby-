@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe GameRules do 
-	
+describe GameRules do
+
 	let(:rules) {GameRules.new}
 	let(:board) {GameBoard.new}
-	
+
 	it "checks row win"  do
 		board.spots = [
 									 "1", "2", "3",
