@@ -15,7 +15,6 @@ class Computer
 		point = -1
 		best_point = -1
 		best_spot = nil
-		level = level
 		return get_point(board, current_player, level), nil if @rules.game_over(board)
 			board.available_spots.each do |spot|
 		 		board.mark_choice_spot(spot, current_player)
@@ -30,8 +29,8 @@ class Computer
 	 end
 
 	def get_point(board, current_player, level)
-		return (1.0 / -level) if @rules.game_win(board) 
-		return 0		
+		return (1.0 / -level) if @rules.game_win(board)
+		return 0
 	end
 
 	def change_player(current_player)

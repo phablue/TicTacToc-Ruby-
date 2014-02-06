@@ -10,7 +10,7 @@ class Game
 		@game_continue = true
 		@board = GameBoard.new
 		@rules = GameRules.new
-		@human = Human.new	
+		@human = Human.new
 		@computer = Computer.new
 	end
 
@@ -31,7 +31,7 @@ class Game
 		puts "Game Over"
 	end
 
-	def play 
+	def play
 		welcome_msg
 		@board.show_board
 		while @game_continue == true
@@ -47,8 +47,4 @@ class Game
 		tie_msg
 		gameover_msg
 	end
-end	
-
-game = Game.new
-game.play
-
+end

@@ -4,10 +4,10 @@ class GameBoard
 
 	def initialize
 		@spots = [
-					"1", "2", "3",
-					"4", "5", "6",
-					"7", "8", "9"
-				 ]
+							"1", "2", "3",
+							"4", "5", "6",
+							"7", "8", "9"
+							]
 	end
 
 	def row_spots
@@ -26,14 +26,13 @@ class GameBoard
 	end
 
 	def available_spots
-		@spots.select {|spot| spot =~ /\d/}		
+		@spots.select {|spot| spot =~ /\d/}
 	end
 
 	def show_board
-		puts "\n--------------"
 		for index in 0..2
 			puts row_spots[index].join("  |  ")
-			puts "--------------"
+			puts "ㅡㅡㅡㅡㅡㅡㅡ"
 		end
 	end
 
