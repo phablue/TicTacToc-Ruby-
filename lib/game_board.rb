@@ -1,7 +1,6 @@
 class GameBoard
 
 	attr_accessor :spots
-
 	def initialize
 		@spots = [
 							"1", "2", "3",
