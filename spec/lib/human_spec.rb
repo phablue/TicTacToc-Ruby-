@@ -6,12 +6,12 @@ describe Human do
 
 	context "Show message" do
 		it "when user turn" do
-			human.should_receive(:puts).with("Enter a number of your choice : ")
+			human.should_receive(:print).with("\nEnter a number of your choice : ")
 			human.choose_msg
 		end
 
 		it "when raise error" do
-			human.should_receive(:puts).with("That is not an available number. Please choose a different number.")
+			human.should_receive(:print).with("\nThat is not an available number. Please choose a different number.")
 			human.err_msg
 		end
 	end

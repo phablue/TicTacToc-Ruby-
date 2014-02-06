@@ -75,7 +75,7 @@ describe Computer do
 										 ]
 		}
 		it "show message" do
-			computer.should_receive(:puts).with("Please wait to computer play..")
+			computer.should_receive(:print).with("\nPlease wait to computer play..\n\n")
 			computer.choose_spot(board, "O")
 		end
 
