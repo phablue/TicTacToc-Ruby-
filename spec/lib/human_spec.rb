@@ -19,10 +19,10 @@ describe Human do
 	context "User choose a spot" do
 		before(:each) { 
 			board.spots  = [
-							 "1", "X", "3",
-							 "4", "X", "6",
-							 "O", "O", "9"
-							]
+											 "1", "X", "3",
+											 "4", "X", "6",
+											 "O", "O", "9"
+											]
 			@user = "X"
 		}
 		it "show message" do
