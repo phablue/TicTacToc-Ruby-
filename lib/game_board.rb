@@ -30,8 +30,19 @@ class GameBoard
 
 	def show_board
 		for index in 0..2
-			puts row_spots[index].join("  |  ")
+			puts display_board(index).join("  |  ")
 			puts "--------------" unless index == 2
+		end
+	end
+
+	def display_board(index)
+		row_spots[index].collect do |spot|
+			if spot == "O" || spot == "X"
+				spot
+			else
+				spot = " "
+			end
+			spot
 		end
 	end
 
