@@ -39,7 +39,7 @@ class Game
 	end
 
 	def gameover_msg
-		"\nGame Over"
+		"\nGame Over\n"
 	end
 
 	def ask_yes_no
