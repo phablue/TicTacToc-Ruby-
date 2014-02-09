@@ -62,7 +62,6 @@ describe "GameBoard" do
 									 "4", "5", "6",
 									 "7", "8", "9"
 									]
-		board.mark_choice_spot("2", "X")
-		board.spots[1].should == "X"
+		expect {board.mark_choice_spot("2", "X")}.to change {board.spots[1]}.to("X")
 	end
 end

@@ -1,69 +1,104 @@
 require "spec_helper"
+require "stringio"
 
 describe Computer do
-	let(:computer) {Computer.new}
 	let(:board) {GameBoard.new}
+	let(:computer) {Computer.new(nil)}
 
-	it "changed_player = X when current_player = O " do
-		computer.change_player("O").should == "X"
+	it "computer msg" do
+		output = StringIO.new
+		writer = Writer.new(output)
+		com = Computer.new(writer)
+		writer.should_receive(:print_out).with(com.computer_msg)
+		com.show_computer_msg
 	end
 
-	it "changed_player = O when current_player = X " do
-		computer.change_player("X").should == "O"
+	context "Gets point" do
+		it "if game win" do
+			board.spots = [
+										 "O", "2", "3",
+										 "O", "X", "6",
+										 "O", "X", "X"
+										 ]
+			computer.get_point(board, "O", 6).should < 0
+		end
+
+		it "if game tie" do
+			board.spots = [
+										 "O", "X", "X",
+										 "X", "O", "O",
+										 "O", "X", "X"
+										 ]
+			computer.get_point(board, "O", 9).should == 0
+		end
 	end
 
-	it "choose easy win in a row" do
-		board.spots = [
-									 "X", "X", "3",
-									 "4", "X", "6",
-									 "O", "O", "9"
-									 ]
-		computer.minimax(board, "O").last.should == "9"
+	context "Changes a player" do
+		it "is 'X' if current_player is 'O'" do
+			computer.change_player("O").should == "X"
+		end
+
+		it "is 'O' if current_player is 'X'" do
+			computer.change_player("X").should == "O"
+		end
 	end
 
-	it "choose easy win in a column" do
-		board.spots = [
-									 "O", "2", "3",
-									 "4", "X", "6",
-									 "O", "X", "X"
-									 ]
-		computer.minimax(board, "O").last.should == "4"
+	context "Computer chooses easy way for win" do
+		it "in a row" do
+			board.spots = [
+										 "X", "X", "3",
+										 "4", "X", "6",
+										 "O", "O", "9"
+										 ]
+			computer.minimax(board, "O").last.should == "9"
+		end
+
+		it "in a column" do
+			board.spots = [
+										 "O", "2", "3",
+										 "4", "X", "6",
+										 "O", "X", "X"
+										 ]
+			computer.minimax(board, "O").last.should == "4"
+		end
+
+		it "in a diagonal" do
+			board.spots = [
+										 "X", "X", "O",
+										 "4", "O", "6",
+										 "7", "8", "X"
+										 ]
+			computer.minimax(board, "O").last.should == "7"
+		end
 	end
 
-	it "choose easy win in a diagonal" do
-		board.spots = [
-									 "X", "X", "O",
-									 "4", "O", "6",
-									 "7", "8", "X"
-									 ]
-		computer.minimax(board, "O").last.should == "7"
-	end
+	context "Computer chooses to block a spot for win" do
+		it "in a row" do
+			board.spots = [
+										 "X", "O", "3",
+										 "O", "5", "6",
+										 "X", "8", "X"
+										 ]
+			computer.minimax(board, "O").last.should == "8"
+		end
 
-	it "choose block in a row" do
-		board.spots = [
-									 "X", "O", "3",
-									 "O", "5", "6",
-									 "X", "8", "X"
-									 ]
-		computer.minimax(board, "O").last.should == "8"
-	end
+		it "in a column" do
+			board.spots = [
+										 "X", "O", "3",
+										 "4", "5", "6",
+										 "X", "8", "9"
+										]
+			computer.minimax(board, "O").last.should == "4"
+		end
 
-	it "choose block in a column" do
-		board.spots = [
-									 "X", "O", "3",
-									 "4", "5", "6",
-									 "X", "8", "9"
-									]
-		computer.minimax(board, "O").last.should == "4"
-	end
-
-	it "choose block in a diagonal" do
-		board.spots = [
-									 "X", "O", "X",
-									 "O", "5", "6",
-									 "X", "8", "9"
-									 ]
-		computer.minimax(board, "O").last.should == "5"
+		it "in a diagonal" do
+			board.spots = [
+										 "X", "O", "X",
+										 "O", "5", "6",
+										 "X", "8", "9"
+										 ]
+			computer.minimax(board, "O").last.should == "5"
+		end
 	end
 
 	context "Computer choose the best spot" do
@@ -74,15 +109,17 @@ describe Computer do
 										 "X", "8", "9"
 										 ]
 		}
+
 		it "show message" do
-			computer.should_receive(:print).with("\nPlease wait to computer play..\n\n")
-			computer.choose_spot(board, "O")
+			computer.should_receive(:show_computer_msg)
+			computer.choose_the_best_spot(board, "O")
 		end
 
 		it "mark" do
-			computer.choose_spot(board, "O").should == board.spots[4]
-			board.spots[4].should == "O"
+			output = StringIO.new
+			writer = Writer.new(output)
+			computer = Computer.new(writer)
+			expect {computer.choose_the_best_spot(board, "O")}.to change {board.spots[4]}.to("O")
 		end
 	end
-
 end

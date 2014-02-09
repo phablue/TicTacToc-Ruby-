@@ -1,7 +1,7 @@
 class GameBoard
-
 	attr_accessor :spots
-	def initialize
+	
+	def initialize()
 		@spots = [
 							"1", "2", "3",
 							"4", "5", "6",
@@ -49,5 +49,4 @@ class GameBoard
 	def mark_choice_spot(chosen_spot, current_player)
 		@spots[chosen_spot.to_i-1] = current_player
 	end
-
 end

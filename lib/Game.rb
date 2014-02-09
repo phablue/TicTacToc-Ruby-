@@ -2,68 +2,81 @@ require_relative "game_board"
 require_relative "game_rules"
 require_relative "human"
 require_relative "computer"
-class Game
+require_relative "reader"
+require_relative "writer"
 
-	def initialize
-		@player1 = "X"
-		@player2 = "O"
+class Game
+	attr_accessor :board
+
+	def initialize(reader, writer)
+		@user = "X"
+		@computer = "O"
 		@game_continue = true
+		@reader = reader
+		@writer = writer
 		@board = GameBoard.new
 		@rules = GameRules.new
-		@human = Human.new
-		@computer = Computer.new
+		@human = Human.new(@reader, @writer)
+		@computer = Computer.new(@reader)
+	end
+
+	def show_msg(message)
+		@writer.print_out(message)
 	end
 
 	def welcome_msg
-		puts "\nWelcome to TicTacToe !\n\n"
+		"\nWelcome to TicTacToe !\n\n"
 	end
 
 	def user_win_msg
-		puts "\nCongratulations~ You win !!" 
+		"\nCongratulations~ You win !!" 
 	end
 
 	def computer_win_msg
-		puts "\nSorry.. Computer win.."
+		"\nSorry.. Computer win.."
 	end
 
 	def tie_msg
-		puts "\nGame is tie" 
+		"\nGame is tie" 
 	end
 
 	def gameover_msg
-		puts "Game Over"
-	end
-
-	def end_of_game_msg(current_player)
-		if current_player == @player1 && @rules.game_win(@board)
-			user_win_msg
-		elsif current_player == @player2 && @rules.game_win(@board)
-			computer_win_msg
-		elsif @rules.game_tie(@board)
-			tie_msg
-		end			
-		gameover_msg
+		"\nGame Over"
 	end
 
 	def ask_yes_no
-		print "\nDo you require the first move? (y/n): "
+		"\nDo you require the first move? (y/n): "
+	end
+
+	def err_msg
+		"\nYou have to enter 'y' or 'n'\n"
+	end	
+
+	def end_of_game_msg(current_player)
+		if current_player == @user && @rules.game_win(@board)
+			show_msg(user_win_msg)
+		elsif current_player == @computer && @rules.game_win(@board)
+			show_msg(computer_win_msg)
+		elsif @rules.game_tie(@board)
+			show_msg(tie_msg)
+		end
 	end
 
 	def go_first
-		ask_yes_no
+		show_msg(ask_yes_no)
 		answer = gets.chomp
 		if answer == "y"
-			return @player1
-		elsif answer == "n"			
-			return @player2
+			return @user
+		elsif answer == "n"
+			return @computer
 		else
-			print "\nYou have to enter 'y' or 'n'\n"
+			show_msg(err_msg)
 			go_first
 		end
 	end
 
 	def change_player(current_player)
-		(current_player == @player1) ? @player2 : @player1
+		(current_player == @user) ? @computer : @user
 	end	
 
 	def play
@@ -77,20 +90,21 @@ class Game
 				@board.show_board
 				break if @rules.game_over(@board)
 				current_player = change_player(current_player)
-				@computer.choose_spot(@board, current_player)
+				@computer.choose_the_best_spot(@board, current_player)
 				@board.show_board
 				break if @rules.game_over(@board)
 			else
 				current_player = first
-				@computer.choose_spot(@board, current_player)
+				@computer.choose_the_best_spot(@board, current_player)
 				@board.show_board
 				break if @rules.game_over(@board)
 				current_player = change_player(current_player)
 				@human.choose_spot(@board, current_player)
 				@board.show_board
-				break if @rules.game_over(@board)				
+				break if @rules.game_over(@board)
 			end
 		end
 		end_of_game_msg(current_player)
+		show_msg(gameover_msg)
 	end
 end

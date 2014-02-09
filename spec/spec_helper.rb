@@ -11,6 +11,8 @@ require 'computer'
 require 'game_board'
 require 'game_rules'
 require 'game'
+require 'reader'
+require 'writer'
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true

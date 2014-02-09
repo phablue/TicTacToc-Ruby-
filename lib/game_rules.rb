@@ -1,5 +1,4 @@
 class GameRules
-
 	def win_requirement_row(board)
 		board.row_spots.any? do |spot|
 			spot.uniq.length == 1
@@ -29,5 +28,4 @@ class GameRules
 	def game_over(board)
 		game_win(board) || game_tie(board)
 	end
-
 end
