@@ -2,11 +2,6 @@ require "spec_helper"
 require "stringio"
 
 describe Game do
-  before(:each) {
-    @user = "X"
-    @computer = "O"
-  }
-
   context "Show" do
     before(:each) {
       @output = StringIO.new 
@@ -57,17 +52,17 @@ describe Game do
                               "X", "8", "9"
                             ]
         @game.should_receive(:show_msg).with(@game.user_win_msg)
-        @game.end_of_game_msg(@user)
+        @game.end_of_game_msg("X")
       end
 
-      xit "Show computer win message If computer win" do
+      it "Show computer win message If computer win" do
         @game.board.spots = [
-                              "O", "X", "3",
-                              "O", "X", "X",
-                              "O", "8", "9"
+                              "X", "O", "O",
+                              "X", "O", "X",
+                              "O", "X", "9"
                             ]
         @game.should_receive(:show_msg).with(@game.computer_win_msg)
-        @game.end_of_game_msg(@computer)
+        @game.end_of_game_msg("O")
       end
 
       it "Show tie message if game tie" do
@@ -77,7 +72,7 @@ describe Game do
                               "O", "X", "X"
                             ]
         @game.should_receive(:show_msg).with(@game.tie_msg)
-        @game.end_of_game_msg(@user)
+        @game.end_of_game_msg("X")
       end
     end
   end
@@ -85,39 +80,53 @@ describe Game do
   context "Player change" do
     before(:each) {
       @game = Game.new(nil, nil)
-    }    
+    }
     it "to user if current player is computer" do
-      @game.change_player(@computer).should == @user
+      @game.change_player("O").should == "X"
     end
 
-    xit "to computer if current player is user" do
-      @game.change_player(@user).should == @computer
+    it "to computer if current player is user" do
+      @game.change_player("X").should == "O"
     end
   end
 
-  # context "Play first" do
-  #   it "Asking" do
-  #     expect {game.go_first}.to include{game.ask_yes_no}
-  #     game.should_receive(:print).with("\nDo you require the first move? (y/n): ")
-  #     game.ask_yes_no
-  #   end
+  it "Gets user input" do
+    @input = StringIO.new "y"
+    @reader = Reader.new(@input)
+    @game = Game.new(@reader, nil)
+    @game.input.should == "y"
+  end
 
-  #   it "if answer is yes" do
-  #     answer = "y"
-  #     expect {game.go_first}.to be{@user}
-  #   end
+  context "Play first" do
+    before(:each) {
+      @game = Game.new(@reader, nil)
+    }
+    it "Asking" do
+      expect {@game.go_first}.to include{@game.ask_yes_no}
+      @game.ask_yes_no
+    end
 
-  #   it "if answer is no" do
-  #     answer = "n"
-  #     expect {game.go_first}.to be{@computer}
-  #   end
+    it "if answer is yes" do
+      answer = "y"
+      expect {@game.go_first}.to be{"X"}
+    end
 
-  #   it "if mistake to type" do
-  #     answer = 1
-  #     expect {game.go_first}.to include{"\nYou have to enter 'y' or 'n'\n"}
-  #     game.should_receive(:go_first)
-  #     game.go_first
-  #   end
+    it "if answer is no" do
+      answer = "n"
+      expect {@game.go_first}.to be{"O"}
+    end
+
+    it "Show error message if mistake to type" do
+      answer = "1"
+      expect {@game.go_first}.to include{@game.err_msg}
+    end
+
+    it "Call if mistake to type" do
+      answer = "1"
+      @game.should_receive(:go_first)
+      @game.go_first
+    end
+  end
 
   #   context "Playing" do
   #     it "get welcome message" do

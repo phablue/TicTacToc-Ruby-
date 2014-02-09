@@ -9,8 +9,8 @@ class Game
 	attr_accessor :board
 
 	def initialize(reader, writer)
-		@user = "X"
-		@computer = "O"
+		@player1 = "X"
+		@player2 = "O"
 		@game_continue = true
 		@reader = reader
 		@writer = writer
@@ -53,22 +53,26 @@ class Game
 	end	
 
 	def end_of_game_msg(current_player)
-		if current_player == @user && @rules.game_win(@board)
+		if current_player == @player1 && @rules.game_win(@board)
 			show_msg(user_win_msg)
-		elsif current_player == @computer && @rules.game_win(@board)
+		elsif current_player == @player2 && @rules.game_win(@board)
 			show_msg(computer_win_msg)
 		elsif @rules.game_tie(@board)
 			show_msg(tie_msg)
 		end
 	end
 
+	def input
+		@reader.get_input
+	end
+
 	def go_first
 		show_msg(ask_yes_no)
-		answer = gets.chomp
+		answer = input
 		if answer == "y"
-			return @user
+			return @player1
 		elsif answer == "n"
-			return @computer
+			return @player2
 		else
 			show_msg(err_msg)
 			go_first
@@ -76,7 +80,7 @@ class Game
 	end
 
 	def change_player(current_player)
-		(current_player == @user) ? @computer : @user
+		(current_player == @player1) ? @player2 : @player1
 	end	
 
 	def play
