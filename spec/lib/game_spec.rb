@@ -127,14 +127,4 @@ describe Game do
       @game.go_first
     end
   end
-
-  #   context "Playing" do
-  #     it "get welcome message" do
-  #       expect {game.play}.to include{welcome_msg}
-  #     end
-  #     it "call game board" do
-  #       expect {game.play}.to include{@board.show_board}
-  #     end
-  #   end
-  # end
 end

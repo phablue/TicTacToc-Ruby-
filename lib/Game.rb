@@ -2,8 +2,6 @@ require_relative "game_board"
 require_relative "game_rules"
 require_relative "human"
 require_relative "computer"
-require_relative "reader"
-require_relative "writer"
 
 class Game
 	attr_accessor :board
@@ -17,7 +15,7 @@ class Game
 		@board = GameBoard.new
 		@rules = GameRules.new
 		@human = Human.new(@reader, @writer)
-		@computer = Computer.new(@reader)
+		@computer = Computer.new(@writer)
 	end
 
 	def show_msg(message)
@@ -81,10 +79,10 @@ class Game
 
 	def change_player(current_player)
 		(current_player == @player1) ? @player2 : @player1
-	end	
+	end
 
 	def play
-		welcome_msg
+		show_msg(welcome_msg)
 		@board.show_board
 		first = go_first
 		while @game_continue
