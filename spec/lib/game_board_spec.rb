@@ -12,7 +12,7 @@ describe "GameBoard" do
 										  ]
 		}
 
-		it " : row spots" do 
+		it " : row spots" do
 			board.row_spots.should == [["1", "2", "3"],["4", "5", "6"],["7", "8", "9"]]
 		end
 

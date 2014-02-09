@@ -4,7 +4,7 @@ require "stringio"
 describe Game do
   context "Show" do
     before(:each) {
-      @output = StringIO.new 
+      @output = StringIO.new
       @writer = Writer.new(@output)
       @game = Game.new(nil, @writer)
     }

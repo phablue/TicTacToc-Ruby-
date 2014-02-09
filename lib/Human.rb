@@ -3,6 +3,7 @@ class Human
 		@input = input
 		@output = output
 	end
+
 	def choose_spot(board, current_player)
 		ask_move
 		answer = user_input

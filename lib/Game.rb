@@ -27,7 +27,7 @@ class Game
 	end
 
 	def user_win_msg
-		"\nCongratulations~ You win !!" 
+		"\nCongratulations~ You win !!"
 	end
 
 	def computer_win_msg
@@ -35,7 +35,7 @@ class Game
 	end
 
 	def tie_msg
-		"\nGame is tie" 
+		"\nGame is tie"
 	end
 
 	def gameover_msg
@@ -48,7 +48,7 @@ class Game
 
 	def err_msg
 		"\nYou have to enter 'y' or 'n'\n"
-	end	
+	end
 
 	def end_of_game_msg(current_player)
 		if current_player == @player1 && @rules.game_win(@board)
