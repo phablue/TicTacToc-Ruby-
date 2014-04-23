@@ -46,10 +46,10 @@ describe Computer do
   context "Computer chooses easy way for win" do
     it "in a row" do
       board.spots = [
-        "X", "X", "3",
-        "4", "X", "6",
-        "O", "O", "9"
-      ]
+                      "X", "X", "3",
+                      "4", "X", "6",
+                      "O", "O", "9"
+                    ]
       computer.minimax(board, "O").last.should == "9"
     end
 
