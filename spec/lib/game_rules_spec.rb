@@ -11,7 +11,7 @@ describe GameRules do
                    "4", "5", "6",
                    "X", "X", "X"
                   ]
-    rules.win_requirement_row(board).should == true
+    rules.win_requirements(board.row_spots).should == true
   end
 
   it "checks row win"  do
@@ -20,7 +20,7 @@ describe GameRules do
                    "O", "O", "O",
                    "7", "8", "9"
                   ]
-    rules.win_requirement_row(board).should == true
+    rules.win_requirements(board.row_spots).should == true
   end
 
   it "checks column win" do
@@ -29,7 +29,7 @@ describe GameRules do
                    "X", "5", "6",
                    "X", "8", "9"
                   ]
-    rules.win_requirement_column(board).should == true
+    rules.win_requirements(board.column_spots).should == true
   end
 
   it "checks column win" do
@@ -38,7 +38,7 @@ describe GameRules do
                    "4", "5", "O",
                    "7", "8", "O"
                   ]
-    rules.win_requirement_column(board).should == true
+    rules.win_requirements(board.column_spots).should == true
   end
 
   it "checks diagonal win" do
@@ -47,7 +47,7 @@ describe GameRules do
                    "4", "X", "6",
                    "X", "8", "9"
                   ]
-    rules.win_requirement_diagonal(board).should == true
+    rules.win_requirements(board.diagonal_spots).should == true
   end
 
   it "checks diagonal win" do
@@ -56,7 +56,7 @@ describe GameRules do
                    "4", "O", "6",
                    "7", "8", "O"
                   ]
-    rules.win_requirement_diagonal(board).should == true
+    rules.win_requirements(board.diagonal_spots).should == true
   end
 
   it "checks win" do
