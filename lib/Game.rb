@@ -18,6 +18,71 @@ class Game
     @computer = Computer.new(@writer)
   end
 
+  def play
+    show_msg(welcome_msg)
+    @board.show_board
+    first_player = go_first
+    while @game_continue
+      if first_player == @player1
+        current_player = first_player
+        human_play(current_player)
+        break if @rules.game_over(@board)
+        current_player = change_player(first_player)
+        computer_play(current_player)
+      else
+        current_player = first_player
+        computer_play(current_player)
+        break if @rules.game_over(@board)
+        current_player = change_player(first_player)
+        human_play(current_player)
+      end
+      break if @rules.game_over(@board)
+    end
+    end_of_game_msg(current_player)
+    show_msg(gameover_msg)
+  end
+
+  def human_play(current_player)
+    @human.choose_spot(@board, current_player)
+    @board.show_board
+  end
+
+  def computer_play(current_player)
+    @computer.choose_the_best_spot(@board, current_player)
+    @board.show_board
+  end
+
+  def go_first
+    show_msg(ask_yes_no)
+    answer = input
+    if answer == "y"
+      return @player1
+    elsif answer == "n"
+      return @player2
+    else
+      show_msg(err_msg)
+      go_first
+    end
+  end
+
+  def end_of_game_msg(current_player)
+    if current_player == @player1 && @rules.game_win(@board)
+      show_msg(user_win_msg)
+    elsif current_player == @player2 && @rules.game_win(@board)
+      show_msg(computer_win_msg)
+    elsif @rules.game_tie(@board)
+      show_msg(tie_msg)
+    end
+  end
+
+  def input
+    @reader.get_input
+  end
+
+  def change_player(current_player)
+    (current_player == @player1) ? @player2 : @player1
+  end
+
   def show_msg(message)
     @writer.print_out(message)
   end
@@ -48,65 +113,5 @@ class Game
 
   def err_msg
     "\nYou have to enter 'y' or 'n'\n"
-  end
-
-  def end_of_game_msg(current_player)
-    if current_player == @player1 && @rules.game_win(@board)
-      show_msg(user_win_msg)
-    elsif current_player == @player2 && @rules.game_win(@board)
-      show_msg(computer_win_msg)
-    elsif @rules.game_tie(@board)
-      show_msg(tie_msg)
-    end
-  end
-
-  def input
-    @reader.get_input
-  end
-
-  def go_first
-    show_msg(ask_yes_no)
-    answer = input
-    if answer == "y"
-      return @player1
-    elsif answer == "n"
-      return @player2
-    else
-      show_msg(err_msg)
-      go_first
-    end
-  end
-
-  def change_player(current_player)
-    (current_player == @player1) ? @player2 : @player1
-  end
-
-  def play
-    show_msg(welcome_msg)
-    @board.show_board
-    first = go_first
-    while @game_continue
-      if first == @player1
-        current_player = first
-        @human.choose_spot(@board, current_player)
-        @board.show_board
-        break if @rules.game_over(@board)
-        current_player = change_player(current_player)
-        @computer.choose_the_best_spot(@board, current_player)
-        @board.show_board
-        break if @rules.game_over(@board)
-      else
-        current_player = first
-        @computer.choose_the_best_spot(@board, current_player)
-        @board.show_board
-        break if @rules.game_over(@board)
-        current_player = change_player(current_player)
-        @human.choose_spot(@board, current_player)
-        @board.show_board
-        break if @rules.game_over(@board)
-      end
-    end
-    end_of_game_msg(current_player)
-    show_msg(gameover_msg)
   end
 end
