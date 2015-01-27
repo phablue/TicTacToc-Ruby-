@@ -34,7 +34,7 @@ describe "GameBoard" do
     end
   end
 
-  context "Display board" do
+  context "Organize spots : Unchosen(number) spots spots makes to disappear" do
     before(:each) {
       board.spots = [
                      "1", "X", "3",
@@ -44,15 +44,15 @@ describe "GameBoard" do
     }
 
     it "from first row" do
-      board.display_board(0).should == [" ", "X", " "]
+      board.organize_spots(0).should == [" ", "X", " "]
     end
 
     it "from second row" do
-      board.display_board(1).should == [" ", "O", " "]
+      board.organize_spots(1).should == [" ", "O", " "]
     end
 
     it "from third row" do
-      board.display_board(2).should == ["X", " ", " "]
+      board.organize_spots(2).should == ["X", " ", " "]
     end
   end
 
