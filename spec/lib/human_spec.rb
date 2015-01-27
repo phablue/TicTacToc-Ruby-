@@ -4,6 +4,36 @@ require "stringio"
 describe Human do
   let(:board) {GameBoard.new}
 
+  context "Check the user input validation : " do
+    before(:each) {
+      @output = StringIO.new
+      @writer = Writer.new(@output)
+      @human = Human.new(nil, @writer)
+      board.spots  = [
+                       "1", "X", "3",
+                       "4", "X", "6",
+                       "O", "O", "9"
+                      ]
+      @user = "X"
+      @answer = "2"
+    }
+
+    it "When the input is invalid, show error message" do
+      @human.should_receive(:unavailable_spot).and_return(@human.error_message)
+      @human.check_available(board, @user, @answer)
+    end
+
+    it "When the input is invalid, call choose_spot method" do
+      @human.should_receive(:choose_spot)
+      @human.check_available(board, @user, @answer)
+    end
+
+    it "When the input is valid, mark a chosen spot" do
+      @answer = "1"
+      expect {@human.check_available(board, @user, @answer)}.to change {board.spots[0]}.to("X")
+    end
+  end
+
   context "Show message" do
     before(:each) {
       @output = StringIO.new
@@ -17,7 +47,7 @@ describe Human do
     end
 
     it "when raise error" do
-      @writer.should_receive(:print_out).with(@human.err_msg)
+      @writer.should_receive(:print_out).with(@human.error_message)
       @human.raise_error
     end
   end
@@ -27,52 +57,5 @@ describe Human do
     @reader = Reader.new(@input)
     @human = Human.new(@reader, nil)
     @human.user_input.should == "1"
-  end
-
-  context "Check answer is available." do
-    before(:each) {
-      @output = StringIO.new
-      @writer = Writer.new(@output)
-      @human = Human.new(nil, @writer)
-      board.spots  = [
-                       "1", "X", "3",
-                       "4", "X", "6",
-                       "O", "O", "9"
-                      ]
-      @user = "X"
-      @answer = "2"
-    }
-
-    it "Show message" do
-      expect {@human.check_available(board, @user, @answer)}.to include{@human.err_msg}
-    end
-
-    it "Call choose_spot method if spot is unavailable" do
-      @human.should_receive(:choose_spot)
-      @human.check_available(board, @user, @answer)
-    end
-  end
-
-  context "Check answer is available." do
-    before(:each) {
-      @human = Human.new(nil,nil)
-      board.spots  = [
-                       "1", "X", "3",
-                       "4", "X", "6",
-                       "O", "O", "9"
-                      ]
-      @user = "X"
-      @answer = "1"
-    }
-
-    it "Marks if spot is available" do
-      expect {@human.check_available(board, @user, @answer)}.to change {board.spots[0]}.to("X")
-    end
-
-    it "Call unavailable_spot method If spot is unavailable" do
-      @answer = "2"
-      @human.should_receive(:unavailable_spot)
-      @human.check_available(board, @user, @answer)
-    end
   end
 end

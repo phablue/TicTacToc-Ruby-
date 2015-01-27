@@ -6,40 +6,39 @@ class Human
 
   def choose_spot(board, current_player)
     ask_move
-    answer = user_input
-    check_available(board, current_player, answer)
+    check_available(board, current_player, user_input)
+  end
+
+  def check_available(board, current_player, user_input)
+    if board.available_spots.include?(user_input)
+      board.mark_choice_spot(user_input, current_player)
+    else
+      unavailable_spot(board, current_player)
+    end
+  end
+
+  def unavailable_spot(board, current_player)
+    raise_error
+    choose_spot(board, current_player)
   end
 
   def ask_move
     @output.print_out(move_msg)
   end
 
-  def move_msg
-    "\nEnter a number of your choice : "
-  end
-
   def user_input
     @input.get_input
   end
 
-  def check_available(board, current_player, answer)
-    if board.available_spots.include?(answer)
-      board.mark_choice_spot(answer, current_player)
-    else
-      unavailable_spot(board, current_player)
-    end
-  end
-
   def raise_error
-    @output.print_out err_msg
+    @output.print_out error_message
   end
 
-  def err_msg
+  def move_msg
+    "\nEnter a number of your choice : "
+  end
+
+  def error_message
     "\nThat is not an available number. Please choose a different number."
-  end
-
-  def unavailable_spot(board, current_player)
-    raise_error
-    choose_spot(board, current_player)
   end
 end
